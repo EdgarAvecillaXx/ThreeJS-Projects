@@ -39,6 +39,9 @@ export default {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+        resolve: {
+          fullySpecified: false,
+        },
       },
 
       // CSS
