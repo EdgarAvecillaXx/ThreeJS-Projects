@@ -122,9 +122,14 @@ gui.add(material, 'roughness').min(0).max(1).step(0.001);
  * Objects
  */
 const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
-sphere.castShadow = true; // this properties indicates if the object generate a shadow
+sphere.castShadow = false; // this properties indicates if the object generate a shadow
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), material);
+const sphere2 = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
+
+const plane = new THREE.Mesh(
+  new THREE.PlaneGeometry(5, 5),
+  new THREE.MeshBasicMaterial({ map: bakedShadow })
+);
 
 plane.rotation.x = -Math.PI * 0.5;
 plane.position.y = -0.5;
@@ -137,7 +142,7 @@ const sphereShadow = new THREE.Mesh(
 sphereShadow.rotateX(-Math.PI * 0.5);
 sphereShadow.position.y = plane.position.y + 0.001;
 
-scene.add(plane, sphere, sphereShadow);
+scene.add(plane, sphere, sphere2, sphereShadow);
 
 /**
  * Sizes
@@ -184,7 +189,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-renderer.shadowMap.enabled = false;
+renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
 /**
