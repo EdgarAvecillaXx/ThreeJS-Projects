@@ -58,6 +58,9 @@ function SceneManager(canvas) {
   this.animate = () => {
     const elapsedTime = clock.getElapsedTime();
 
+    // Update controls
+    defaultControls.update();
+
     // Update scene
     sceneComponents.forEach(sceneComponent => {
       sceneComponent.update && sceneComponent.update(elapsedTime);
@@ -72,9 +75,6 @@ function SceneManager(canvas) {
     const { width, height } = canvas;
     screenDimensions.width = width;
     screenDimensions.height = height;
-
-    // Update controls
-    defaultControls.update();
 
     // Update camera
     camera.aspect = width / height;
