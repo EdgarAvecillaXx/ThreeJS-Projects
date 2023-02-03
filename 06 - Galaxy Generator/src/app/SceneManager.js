@@ -1,11 +1,12 @@
 import { Clock, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GUI } from 'lil-gui';
-import Component from './SceneComponents';
+
+import Galaxy from './SceneComponents/Galaxy';
 
 function SceneManager(canvas) {
   //debug
-  const gui = new GUI();
+  const gui = new GUI({ title: 'Galaxy Generator', width: 360 });
 
   //Clock
   const clock = new Clock();
@@ -31,7 +32,7 @@ function SceneManager(canvas) {
 
   //Renderer
   function buildRenderer({ width, height }) {
-    const renderer = new WebGLRenderer({ canvas });
+    const renderer = new WebGLRenderer({ canvas: canvas });
     const DPR = Math.min(window.devicePixelRatio, 2);
     renderer.setSize(width, height);
     renderer.setPixelRatio(DPR);
@@ -45,7 +46,7 @@ function SceneManager(canvas) {
     const fov = 75;
     const near = 0.1;
     const far = 100;
-    const camera = new PerspectiveCamera(aspectRatio, fov, near, far);
+    const camera = new PerspectiveCamera(fov, aspectRatio, near, far);
     camera.position.x = 3;
     camera.position.y = 3;
     camera.position.z = 3;
@@ -55,7 +56,7 @@ function SceneManager(canvas) {
 
   //Scene Components
   function createSceneComponents(scene, gui) {
-    const sceneComponents = [new Component(scene, gui)];
+    const sceneComponents = [new Galaxy(scene, gui)];
 
     return sceneComponents;
   }
@@ -100,3 +101,5 @@ function SceneManager(canvas) {
     }
   };
 }
+
+export default SceneManager;
